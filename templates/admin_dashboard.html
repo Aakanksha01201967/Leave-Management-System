@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --success: #10b981;
+            --success-hover: #059669;
+            --danger: #ef4444;
+            --danger-hover: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 1.75rem;
+        }
+
+        h3 {
+            margin: 5px 0 20px 0;
+            color: var(--text-muted);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+
+        .logout-btn {
+            background-color: #f87171;
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--danger-hover);
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: var(--border-color);
+            margin: 20px 0;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f9fafb;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+            text-align: center;
+        }
+
+        td {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        tbody tr {
+            transition: background-color 0.15s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f9fafb;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-approved {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+
+        .status-rejected {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .action-group {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .approve, .reject {
+            padding: 6px 14px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .approve {
+            background: var(--success);
+            color: white;
+        }
+
+        .approve:hover {
+            background: var(--success-hover);
+        }
+
+        .reject {
+            background: var(--danger);
+            color: white;
+        }
+
+        .reject:hover {
+            background: var(--danger-hover);
+        }
+
+        .status-text {
+            color: var(--text-muted);
+            font-weight: 500;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <div>
+            <h2>Admin Dashboard</h2>
+            <h3>Welcome <strong>{{ session['username'] }}</strong></h3>
+        </div>
+        <a href="/logout" class="logout-btn">Logout</a>
+    </div>
+
+    <hr>
+
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Employee</th>
+                    <th>From Date</th>
+                    <th>To Date</th>
+                    <th>Reason</th>
+                    <th>Leave Type</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for leave in leaves %}
+                <tr>
+                    <td>{{ leave.id }}</td>
+                    <td><strong>{{ leave.username }}</strong></td>
+                    <td>{{ leave.from_date }}</td>
+                    <td>{{ leave.to_date }}</td>
+                    <td>{{ leave.reason }}</td>
+                    <td>{{ leave.leave_type }}</td>
+                    <td>
+                        <!-- Optional: Dynamic status styling helper classes -->
+                        {% if leave.status == "Pending" %}
+                            <span class="status-badge status-pending">{{ leave.status }}</span>
+                        {% elif leave.status == "Approved" %}
+                            <span class="status-badge status-approved">{{ leave.status }}</span>
+                        {% else %}
+                            <span class="status-badge status-rejected">{{ leave.status }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="action-group">
+                        {% if leave.status == "Pending" %}
+                            <a class="approve" href="/approve/{{ leave.id }}">Approve</a>
+                            <a class="reject" href="/reject/{{ leave.id }}">Reject</a>
+                        {% else %}
+                            <span class="status-text">{{ leave.status }}</span>
+                        {% endif %}
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply Leave</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --focus-ring: rgba(79, 70, 229, 0.2);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .back-link {
+            display: inline-block;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        h2 {
+            margin: 0 0 24px 0;
+            color: var(--text-main);
+            font-size: 1.75rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        input[type="date"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--text-main);
+            background-color: #f9fafb;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        input[type="date"]:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #ffffff;
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            background-color: var(--primary);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            margin-top: 10px;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--primary-hover);
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/user_dashboard" class="back-link">← Back to Dashboard</a>
+    <h2>Apply Leave</h2>
+
+    <form method="post">
+        
+        <div class="form-group">
+            <label for="leave_type">Leave Type</label>
+            <select id="leave_type" name="leave_type">
+                <option value="Casual Leave">Casual Leave</option>
+                <option value="Maternity Leave">Maternity Leave</option>
+                <option value="Privilage Leave">Privilage Leave</option>
+                <option value="Leave Without Pay">Leave Without Pay</option>
+                <option value="CompOff Leaves">CompOff Leaves</option>
+                <option value="Client Leave">Client Leave</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="from_date">From Date</label>
+            <input type="date" id="from_date" name="from_date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="to_date">To Date</label>
+            <input type="date" id="to_date" name="to_date" required>
+        </div>
+
+        <div class="form-group">
+            <label for="reason">Leave Reason</label>
+            <select id="reason" name="reason">
+                <option value="Personal">Personal</option>
+                <option value="Outdoor">Outdoor</option>
+                <option value="Not Well">Not Well</option>
+            </select>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Apply Leave
+        </button>
+
+    </form>
+</div>
+
+</body>
+</html>
